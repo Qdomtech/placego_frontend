@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>PlaceGo Admin</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="css/admin.css">
+</head>
+<body>
+
+<!-- LOGIN -->
+<section id="login-view" class="login-wrap">
+  <form id="login-form" class="login-card" novalidate>
+    <div class="brand"><span class="mark">P</span><span>PlaceGo <small>Admin</small></span></div>
+    <h1>Sign in</h1>
+    <label for="l-email">Email<input id="l-email" type="email" autocomplete="username" required></label>
+    <label for="l-pass">Password<input id="l-pass" type="password" autocomplete="current-password" required></label>
+    <button class="btn primary" type="submit">Sign in</button>
+    <p class="err" id="login-err" role="alert"></p>
+  </form>
+</section>
+
+<!-- DASHBOARD -->
+<section id="app-view" hidden>
+  <header class="top">
+    <div class="brand"><span class="mark">P</span><span>PlaceGo <small>Admin</small></span></div>
+    <div class="top-r"><span id="who"></span><a href="index.html" class="btn ghost" target="_blank" rel="noopener">View site</a><button class="btn ghost" id="logout">Log out</button></div>
+  </header>
+  <div class="layout">
+    <nav class="side" id="side">
+      <button data-view="dashboard" class="active">Dashboard</button>
+      <button data-view="contacts">Enquiries <span class="badge" id="unread-badge" hidden></span></button>
+      <button data-view="products">Products</button>
+      <button data-view="industries">Industries</button>
+      <button data-view="clients">Clients</button>
+      <button data-view="testimonials">Testimonials</button>
+    </nav>
+    <main class="main" id="main"></main>
+  </div>
+</section>
+
+<!-- EDIT DIALOG -->
+<dialog id="editor">
+  <form id="editor-form" method="dialog">
+    <h2 id="editor-title">Edit</h2>
+    <div id="editor-fields"></div>
+    <p class="err" id="editor-err" role="alert"></p>
+    <div class="row-end">
+      <button type="button" class="btn ghost" id="editor-cancel">Cancel</button>
+      <button type="submit" class="btn primary">Save</button>
+    </div>
+  </form>
+</dialog>
+
+<div class="toast" id="toast" role="status" hidden></div>
+
+<script src="js/config.js"></script>
+<script src="js/admin.js"></script>
+</body>
+</html>
