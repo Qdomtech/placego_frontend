@@ -245,3 +245,7 @@ footer.site .logo small{color:#8FA3CF}
 .foot-bot{border-top:1px solid rgba(255,255,255,.1);margin-top:48px;padding-top:22px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;font-size:13.5px}
 @media (max-width:860px){.foot-grid{grid-template-columns:1fr 1fr}}
 @media (max-width:480px){.foot-grid{grid-template-columns:1fr}}
+.social-links{display:flex;gap:10px;align-items:center}
+.social-links a{display:flex;align-items:center;justify-content:center;width:34px;height:34px;border-radius:8px;background:rgba(255,255,255,.08);color:#AFC0E4;transition:background .2s,color .2s}
+.social-links a:hover{background:var(--blue);color:#fff}
+.social-links svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}

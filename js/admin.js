@@ -41,6 +41,7 @@
 
   /* ---------- resource definitions (drive tables + forms) ---------- */
   const ICONS = ["bank", "heart", "cart", "factory", "edu", "building", "truck", "gov", "db", "chart", "brain", "cloud", "code", "grid"];
+  const SOCIAL_ICONS = ["linkedin", "twitter", "facebook", "instagram", "youtube", "github", "link"];
   const RESOURCES = {
     products: {
       title: "Products",
@@ -81,6 +82,15 @@
         { k: "name", label: "Person name", required: true },
         { k: "designation", label: "Designation" },
         { k: "company", label: "Company" }
+      ]
+    },
+    "social-links": {
+      title: "Social Links",
+      columns: [["platform", "Platform"], ["url", "URL"], ["icon", "Icon"]],
+      fields: [
+        { k: "platform", label: "Platform name", required: true, hint: "e.g. LinkedIn, Twitter" },
+        { k: "url", label: "URL", required: true, hint: "Full URL e.g. https://linkedin.com/company/placego" },
+        { k: "icon", label: "Icon", type: "select", options: SOCIAL_ICONS }
       ]
     }
   };

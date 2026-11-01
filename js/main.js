@@ -268,11 +268,38 @@
   }
 
   /* ---------------- boot ---------------- */
+  /* ---------------- social links ---------------- */
+  const SOCIAL_ICONS = {
+    linkedin:  '<path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/>',
+    twitter:   '<path d="M23 3a10.9 10.9 0 0 1-3.14 1.53A4.48 4.48 0 0 0 22.43.36a9 9 0 0 1-2.88 1.1A4.52 4.52 0 0 0 16.11 0c-2.5 0-4.52 2-4.52 4.5 0 .35.04.7.11 1.03C7.69 5.35 4.07 3.58 1.64.9a4.5 4.5 0 0 0-.61 2.27c0 1.56.8 2.94 2 3.75a4.48 4.48 0 0 1-2.05-.57v.06c0 2.18 1.55 4 3.6 4.42a4.52 4.52 0 0 1-2.04.08c.57 1.8 2.24 3.1 4.21 3.13A9.05 9.05 0 0 1 0 19.54 12.77 12.77 0 0 0 6.92 21.5c8.3 0 12.84-6.88 12.84-12.85 0-.2 0-.39-.01-.58A9.17 9.17 0 0 0 23 3z"/>',
+    facebook:  '<path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>',
+    instagram: '<rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>',
+    youtube:   '<path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46A2.78 2.78 0 0 0 1.46 6.42 29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58 2.78 2.78 0 0 0 1.95 1.96C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-1.96A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02"/>',
+    github:    '<path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/>',
+    link:      '<path d="M10 13a5 5 0 0 0 7 0l3-3a5 5 0 0 0-7-7l-1 1"/><path d="M14 11a5 5 0 0 0-7 0l-3 3a5 5 0 0 0 7 7l1-1"/>'
+  };
+
+  function loadSocialLinks() {
+    const wrap = $("#social-links");
+    if (!wrap) return;
+    api("/social-links")
+      .then((res) => {
+        if (!Array.isArray(res.data) || !res.data.length) return;
+        wrap.innerHTML = res.data.map((s) => {
+          const key = (s.icon || s.platform || "link").toLowerCase();
+          const svg = SOCIAL_ICONS[key] || SOCIAL_ICONS.link;
+          return `<a href="${esc(s.url)}" target="_blank" rel="noopener noreferrer" aria-label="${esc(s.platform)}"><svg viewBox="0 0 24 24">${svg}</svg></a>`;
+        }).join("");
+      })
+      .catch(() => {});
+  }
+
   renderServices();
   loadSection("products", renderProducts);
   loadSection("industries", renderIndustries);
   loadSection("clients", renderClients);
   loadSection("testimonials", renderTestimonials);
+  loadSocialLinks();
   initNav();
   initContact();
   const yr = $("#yr"); if (yr) yr.textContent = new Date().getFullYear();
