@@ -250,14 +250,26 @@
       const r = await api("/" + key + "?all=true");
       const rows = r.data;
       if (!rows.length) { $("#r-table").innerHTML = `<div class="empty">Nothing here yet. Add the first one.</div>`; return; }
-      $("#r-table").innerHTML = `<table><thead><tr><th>#</th>${R.columns.map(([, l]) => `<th>${l}</th>`).join("")}<th>Status</th><th></th></tr></thead><tbody>` +
+      $("#r-table").innerHTML = `<table><thead><tr><th>#</th>${R.columns.map(([, l]) => `<th>${l}</th>`).join("")}<th>Visibility</th><th></th></tr></thead><tbody>` +
         rows.map((d) => `<tr data-rid="${d._id}"><td>${d.order ?? 0}</td>${R.columns.map(([k]) => `<td>${cell(d[k])}</td>`).join("")}
-          <td><span class="pill ${d.isActive ? "closed" : "off"}">${d.isActive ? "Visible" : "Hidden"}</span></td>
+          <td><button class="btn sm r-vis ${d.isActive ? "vis-on" : "vis-off"}" data-active="${d.isActive}">${d.isActive ? "👁 Visible" : "🙈 Hidden"}</button></td>
           <td><div class="actions"><button class="btn ghost sm r-edit">Edit</button><button class="btn danger sm r-del">Delete</button></div></td></tr>`).join("") +
         `</tbody></table>`;
       $$("tr[data-rid]").forEach((tr) => {
         const doc = rows.find((x) => x._id === tr.dataset.rid);
         $(".r-edit", tr).onclick = () => openEditor(key, doc);
+        const visBtn = $(".r-vis", tr);
+        visBtn.onclick = async () => {
+          const newVal = visBtn.dataset.active !== "true";
+          try {
+            await api("/" + key + "/" + doc._id, { method: "PUT", body: JSON.stringify({ ...doc, isActive: newVal }) });
+            doc.isActive = newVal;
+            visBtn.dataset.active = newVal;
+            visBtn.className = "btn sm r-vis " + (newVal ? "vis-on" : "vis-off");
+            visBtn.textContent = newVal ? "👁 Visible" : "🙈 Hidden";
+            toast(newVal ? "Set to visible" : "Set to hidden");
+          } catch (ex) { toast(ex.message); }
+        };
         const del = $(".r-del", tr);
         del.onclick = async () => {
           if (del.dataset.confirm !== "1") { del.dataset.confirm = "1"; del.textContent = "Confirm delete"; setTimeout(() => { del.dataset.confirm = ""; del.textContent = "Delete"; }, 3000); return; }

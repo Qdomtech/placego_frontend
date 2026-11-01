@@ -74,6 +74,10 @@ dialog::backdrop{background:rgba(8,27,75,.45)}
 .hint{font-weight:400;color:var(--muted);font-size:12px}
 .row-end{display:flex;justify-content:flex-end;gap:10px}
 .toast{position:fixed;bottom:20px;right:20px;background:var(--navy);color:#fff;padding:12px 18px;border-radius:10px;font-weight:600;z-index:100}
+.btn.vis-on{background:#E6F4EA;color:#1A6E31;border:1.5px solid #A8D5B0;font-size:13px}
+.btn.vis-on:hover{background:#C6E8CC}
+.btn.vis-off{background:#FFF0F0;color:#9B1C1C;border:1.5px solid #F5B8B8;font-size:13px}
+.btn.vis-off:hover{background:#FFD6D6}
 @media (max-width:800px){
   .layout{grid-template-columns:1fr}
   .side{flex-direction:row;overflow-x:auto;border-right:0;border-bottom:1px solid var(--line)}
