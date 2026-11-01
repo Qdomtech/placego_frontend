@@ -294,6 +294,31 @@
       .catch(() => {});
   }
 
+  /* ---------------- section visibility ---------------- */
+  const SECTION_ELS = {
+    products:     "#products",
+    industries:   "#industries",
+    clients:      "#clients",
+    testimonials: "#testimonials"
+  };
+
+  api("/sections")
+    .then((res) => {
+      const map = {};
+      (res.data || []).forEach((s) => { map[s.key] = s.isActive; });
+      Object.entries(SECTION_ELS).forEach(([key, sel]) => {
+        if (map[key] === false) {
+          const el = document.querySelector(sel);
+          if (el) el.hidden = true;
+        }
+      });
+      if (map["social-links"] === false) {
+        const el = $("#social-links");
+        if (el) el.hidden = true;
+      }
+    })
+    .catch(() => {});
+
   renderServices();
   loadSection("products", renderProducts);
   loadSection("industries", renderIndustries);
